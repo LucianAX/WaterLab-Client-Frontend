@@ -14,15 +14,15 @@ let insertIntoTable = measurement => {
     measurementsTable.appendChild(newTableRow);
 }
 
-async function renderMeasurements () {
-    //sends request
+async function renderMeasurements() {
+    
     try {
         //sends request
         const response = await fetch('http://localhost:4000/api/measurements', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
-            },
+            }
         });
 
         //handles response if successful
@@ -30,10 +30,7 @@ async function renderMeasurements () {
             const jsonResponse = await response.json();
             
             //Code to execute with jsonResponse
-            // console.log(jsonResponse);
-
-            jsonResponse.measurements.forEach(measurement => insertIntoTable(measurement));
-            // insertIntoTable(jsonResponse.measurements[0]);
+            jsonResponse.measurements.forEach(measurement => insertIntoTable(measurement) );
         }
     } 
     //handles response if unsuccessful
@@ -43,26 +40,6 @@ async function renderMeasurements () {
 }
 
 renderMeasurements();
-
-
-
-// //create new object
-// const xhr = new XMLHttpRequest();
-// const url = 'http://localhost:4000/api/measurements';
-
-// //handle response
-// xhr.responseType = 'json';
-// xhr.onreadystatechange = () => {
-//     if (xhr.readyState === XMLHttpRequest.DONE) {
-//         //Code to execute with response
-//         console.log('E bine');
-//         console.log(xhr.response);
-//     }
-// };
-
-// //open request and send object
-// xhr.open('GET', url);
-// xhr.send();
 
 
 

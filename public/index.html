@@ -17,21 +17,42 @@
             <p>Measurement received! Check latest entry in list!</p>
         </aside>
         <main>
-            <h2>MEASUREMENTS</h2>
-            <table>
-                <tbody id="measurements-table-body">
-                    <tr>
-                        <th>ID</th>
-                        <th>TIMESTAMP</th>
-                        <th>pH VALUE</th>
-                        <th>TEMPERATURE (°C)</th>
-                        <th>ELECTRIC CONDUCTIVITY (S/m)</th>
-                    </tr>
-                </tbody>
-            </table>
+            <section>
+                <h2>MEASUREMENTS</h2>
+                <table>
+                    <thead class="sticky">
+                        <tr>
+                            <th>ID</th>
+                            <th>TIMESTAMP</th>
+                            <th>pH VALUE</th>
+                            <th>TEMPERATURE (°C)</th>
+                            <th>ELECTRIC CONDUCTIVITY (S/m)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="measurements-table-body">
+                    </tbody>
+                </table>
+            </section>
+            <section>
+                <h2>WARNINGS</h2>
+                <table>
+                    <thead class="sticky">
+                        <tr>
+                            <th>ID</th>
+                            <th>MEASUREMENT ID</th>
+                            <th>TIMESTAMP</th>
+                            <th>pH VALUE</th>
+                            <th>TEMPERATURE (°C)</th>
+                            <th>ELECTRIC CONDUCTIVITY (S/m)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="warnings-table-body">
+                    </tbody>
+                </table>
+            </section>
         </main>
-        <!-- <script type="module" src='../scripts/request_measurement.js'></script> -->
         <script src='../scripts/request_measurement.js'></script>
         <script src='../scripts/render_measurements.js'></script>
+        <script src='../scripts/render_warnings.js'></script>
     </body>
 </html>
