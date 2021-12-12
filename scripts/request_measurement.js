@@ -2,6 +2,12 @@
 
 const btn = document.getElementById('request-measurement-button');
 
+btn.addEventListener('click', () => {
+    sendPostRequest();
+});
+
+/*** Helper functions ***/
+
 const checkForSingleDigit = (timeUnit) => {
         timeUnit < 10 
             ? timeUnit = "0" + timeUnit
@@ -33,6 +39,35 @@ const getRandomRealNumber = (min, max, desiredDecimals) => {
     return Number(longDigitsVal.toFixed(desiredDecimals));
 }
 
+const prependIntoTable = measurement => {
+    let measurementsTable = document.getElementById('measurements-table-body');
+    let newTableRow = document.createElement('tr');
+    
+    newTableRow.innerHTML =
+        `
+        <td>${measurement.id}</td>
+        <td>${measurement.timestamp}</td>
+        <td>${measurement.ph_value}</td>
+        <td>${measurement.temperature_celsius}</td>
+        <td>${measurement.electric_conductivity}</td>
+        `;
+
+    // measurementsTable.appendChild(newTableRow);
+    measurementsTable.insertBefore(newTableRow, measurementsTable.childNodes[0]);
+}
+
+const generateAnnouncement = (text) => {
+    const announcement = document.getElementById("request-measurement-message");
+    announcement.textContent = text;
+    announcement.style.display = 'inline';
+    setTimeout(() => {
+        announcement.textContent = '';
+        announcement.style.display = 'none';
+    }, 5000);    
+};
+
+
+/*** Creating measurement and sending it as request ***/
 
 const timestamp = getTimestamp();
 
@@ -47,7 +82,7 @@ const electricConductivity = getRandomRealNumber(0.005, 0.051, 3);
 
 
 
-//Request using async-await fetch
+// Request measurement using async-await fetch
 async function sendPostRequest() {
     try {
         const url = 'http://localhost:4000/api/measurements';
@@ -66,9 +101,17 @@ async function sendPostRequest() {
                 }
             })
         });
+        
+        // handles response
         if (response.ok) {
             const jsonResponse = await response.json();
-            console.log(jsonResponse);
+            console.log(jsonResponse.measurement);
+
+            setTimeout(() => {
+                generateAnnouncement('Measurement received! Check latest entry in the list!');
+                prependIntoTable(jsonResponse.measurement);
+            }, 1000);
+            
         } else {
             throw new Error('Request failed!');
         }
@@ -76,7 +119,3 @@ async function sendPostRequest() {
         console.log(error);
     }
 }
-
-btn.addEventListener('click', () => {
-    sendPostRequest();
-});
