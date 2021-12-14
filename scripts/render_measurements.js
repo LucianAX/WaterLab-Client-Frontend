@@ -2,6 +2,12 @@ let insertIntoTable = measurement => {
     let measurementsTable = document.getElementById('measurements-table-body');
     let newTableRow = document.createElement('tr');
     
+    console.log(measurement.hasWarning);
+
+    if (measurement.has_warning === 'true') {
+        newTableRow.classList.add('has-warning');
+    }
+
     newTableRow.innerHTML =
         `
         <td>${measurement.id}</td>
@@ -12,6 +18,7 @@ let insertIntoTable = measurement => {
         `;
 
     measurementsTable.appendChild(newTableRow);
+    // console.log(newTableRow.classList[0]);
 }
 
 async function renderMeasurements() {
@@ -30,7 +37,8 @@ async function renderMeasurements() {
             const jsonResponse = await response.json();
             
             //Code to execute with jsonResponse
-            jsonResponse.measurements.forEach(measurement => insertIntoTable(measurement) );
+            jsonResponse.measurements
+                .forEach(measurement => insertIntoTable(measurement) );
         }
     } 
     //handles response if unsuccessful

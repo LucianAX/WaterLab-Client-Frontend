@@ -106,3 +106,9 @@ td {
     position: sticky;
     top: 0;
 }
+
+/**** Style ****/
+.has-warning {
+    background: lightcoral;
+}
+
