@@ -1,6 +1,7 @@
 let insertWarningIntoTable = warning => {
-    let measurementsTable = document.getElementById('warnings-table-body');
-    let newTableRow = document.createElement('tr');
+    let measurementsTable = document.getElementById('warnings-table-body')
+    let newTableRow = document.createElement('tr')
+    newTableRow.classList.add('has-warning')
     
     newTableRow.innerHTML =
         `
@@ -12,7 +13,7 @@ let insertWarningIntoTable = warning => {
         <td>${warning.electric_conductivity}</td>
         `;
 
-    measurementsTable.appendChild(newTableRow);
+    measurementsTable.appendChild(newTableRow)
 }
 
 async function renderWarnings() {
@@ -24,20 +25,20 @@ async function renderWarnings() {
             headers: {
                 'Content_Type': 'application/json'
             }
-        });
+        })
 
         //handles response if successful
         if (response.ok) {
-            const jsonResponse = await response.json();
+            const jsonResponse = await response.json()
 
             //Code to execute with jsonResponse
-            jsonResponse.warnings.forEach(warning => insertWarningIntoTable(warning) );
+            jsonResponse.warnings.forEach(warning => insertWarningIntoTable(warning) )
         }
     }
     //handles response if unsuccessful
     catch (error) {
-        console.log(error);
+        console.log(error)
     }
 }
 
-renderWarnings();
+renderWarnings()

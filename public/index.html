@@ -17,8 +17,14 @@
             <p id="request-measurement-message"></p>
         </aside>
         <main>
-            <section>
-                <h2>MEASUREMENTS</h2>
+            <div id="slider-container">
+                <!-- <p>All measurements</p> -->
+                <input type="checkbox" id="decorator" class="decorator">
+                <label for="decorator"></label>
+                <!-- <p>Warnings only</p> -->
+            </div>
+            <section class="container-measurements">
+                <h2>ALL MEASUREMENTS</h2>
                 <table>
                     <thead class="sticky">
                         <tr>
@@ -33,17 +39,17 @@
                     </tbody>
                 </table>
             </section>
-            <section>
-                <h2>WARNINGS</h2>
+            <section class="container-warnings">
+                <h2 class="title-warnings">WARNINGS</h2>
                 <table>
                     <thead class="sticky">
                         <tr>
-                            <th>ID</th>
-                            <th>MEASUREMENT ID</th>
-                            <th>TIMESTAMP</th>
-                            <th>pH VALUE</th>
-                            <th>TEMPERATURE (°C)</th>
-                            <th>ELECTRIC CONDUCTIVITY (S/m)</th>
+                            <th class="table-head-warnings">ID</th>
+                            <th class="table-head-warnings">MEASUREMENT ID</th>
+                            <th class="table-head-warnings">TIMESTAMP</th>
+                            <th class="table-head-warnings">pH VALUE</th>
+                            <th class="table-head-warnings">TEMPERATURE (°C)</th>
+                            <th class="table-head-warnings">ELECTRIC CONDUCTIVITY (S/m)</th>
                         </tr>
                     </thead>
                     <tbody id="warnings-table-body">
@@ -51,8 +57,9 @@
                 </table>
             </section>
         </main>
-        <script src='../scripts/request_measurement.js'></script>
+        <script src='../scripts/slider_behavior.js'></script>
         <script src='../scripts/render_measurements.js'></script>
         <script src='../scripts/render_warnings.js'></script>
+        <script src='../scripts/request_measurement.js'></script>
     </body>
 </html>
