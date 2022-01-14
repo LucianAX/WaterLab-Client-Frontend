@@ -1,4 +1,5 @@
 const slider = document.getElementById('decorator')
+slider.checked = false;
 slider.addEventListener('click', () => check())
 
 const check = () => {
@@ -20,7 +21,7 @@ const check = () => {
         measContainer.style.display = 'block'
         warnContainer.style.display = 'none'
         // #66C4FF;
-        
+
     }
 
 }
