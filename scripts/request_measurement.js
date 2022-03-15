@@ -1,5 +1,3 @@
-// import renderMeasurements from "./render_measurements";
-
 const btn = document.getElementById('request-measurement-button');
 
 btn.addEventListener('click', () => {

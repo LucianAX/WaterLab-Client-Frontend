@@ -2,7 +2,7 @@ let insertIntoTable = measurement => {
     let measurementsTable = document.getElementById('measurements-table-body');
     let newTableRow = document.createElement('tr');
     
-    console.log(measurement.hasWarning);
+    // console.log(measurement.hasWarning);
 
     if (measurement.has_warning === 'true') {
         newTableRow.classList.add('has-warning');

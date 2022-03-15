@@ -9,19 +9,15 @@ const check = () => {
 
     if (slider.checked) {
         // show warnings
-        console.log('checked')
         measContainer.style.display = 'none'
         warnContainer.style.display = 'block'
         tableBody.style.backgroundColor = 'red'
-        // '#EB8A8C'
         console.log(tableBody.style.backgroundColor)
     } else {
         // show measurements
         console.log('unchecked')
         measContainer.style.display = 'block'
         warnContainer.style.display = 'none'
-        // #66C4FF;
-
     }
 
 }
