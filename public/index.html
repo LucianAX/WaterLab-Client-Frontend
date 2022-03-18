@@ -17,49 +17,49 @@
             <p id="request-measurement-message"></p>
         </aside>
         <main>
-            <section id="parameters">
-                    <article id="container-minimums" class="container-parameters">
-                        <div class="parameter">
-                            <p class="parameter-text">Minimum pH: </p>
-                            <div class="container-parameter-values">
-                                <p class="parameter-value">X</p>
+            <section id="limits">
+                    <article id="container-minimums" class="container-limits">
+                        <div class="limit">
+                            <p class="limit-text">Minimum pH: </p>
+                            <div class="container-limit-values">
+                                <p id="pH-min" class="limit-value">X</p>
                                 <button>Edit</button>
                             </div>
                         </div>
-                        <div class="parameter">
-                            <p class="parameter-text">Minimum temperature (°C): </p>
-                            <div class="container-parameter-values">
-                                <p class="parameter-value">X</p>
+                        <div class="limit">
+                            <p class="limit-text">Minimum temperature (°C): </p>
+                            <div class="container-limit-values">
+                                <p id="temp-min" class="limit-value">X</p>
                                 <button>Edit</button>
                             </div>
                         </div>
-                        <div class="parameter">
-                            <p class="parameter-text">Minimum electrical conductivity (S/m): </p>
-                            <div class="container-parameter-values">
-                                <p class="parameter-value">X</p>
+                        <div class="limit">
+                            <p class="limit-text">Minimum electrical conductivity (S/m): </p>
+                            <div class="container-limit-values">
+                                <p id="ec-min" class="limit-value">X</p>
                                 <button>Edit</button>
                             </div>
                         </div>
                     </article>
-                    <article id="container-maximums" class="container-parameters">
-                        <div class="parameter">
-                            <p class="parameter-text">Maximum pH: </p>
-                            <div class="container-parameter-values">
-                                <p class="parameter-value">X</p>
+                    <article id="container-maximums" class="container-limits">
+                        <div class="limit">
+                            <p class="limit-text">Maximum pH: </p>
+                            <div class="container-limit-values">
+                                <p id="pH-max" class="limit-value">X</p>
                                 <button>Edit</button>
                             </div>
                         </div>
-                        <div class="parameter">
-                            <p class="parameter-text">Maximum temperature (°C): </p>
-                            <div class="container-parameter-values">
-                                <p class="parameter-value">X</p>
+                        <div class="limit">
+                            <p class="limit-text">Maximum temperature (°C): </p>
+                            <div class="container-limit-values">
+                                <p id="temp-max" class="limit-value">X</p>
                                 <button>Edit</button>
                             </div>
                         </div>
-                        <div class="parameter">
-                            <p class="parameter-text">Maximum electrical conductivity (S/m): </p>
-                            <div class="container-parameter-values">
-                                <p class="parameter-value">X</p>
+                        <div class="limit">
+                            <p class="limit-text">Maximum electrical conductivity (S/m): </p>
+                            <div class="container-limit-values">
+                                <p id="ec-max" class="limit-value">X</p>
                                 <button>Edit</button>
                             </div>
                         </div>
@@ -106,6 +106,7 @@
             </section>
         </main>
         <script src='../scripts/slider_behavior.js'></script>
+        <script src='../scripts/limits_behavior.js'></script>
         <script src='../scripts/render_measurements.js'></script>
         <script src='../scripts/render_warnings.js'></script>
         <script src='../scripts/request_measurement.js'></script>

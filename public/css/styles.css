@@ -45,7 +45,7 @@ header, tr {
     background: #66C4FF;
 }
 
-section#parameters {
+section#limits {
     font-size: 1.5rem;
 }
 
@@ -97,18 +97,19 @@ header {
     display: none;
 }
 
-section#parameters {
-    margin: 0 12%;
+section#limits {
+    margin: 0 7%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
-article.container-parameters {
+article.container-limits {
+    /* margin: 0 .5em; */
     display: flex;
     flex-direction: column;
 }
 
-div.parameter {
+div.limit {
     /* border: 1px solid magenta; */
     margin: .5em 0;
     padding-left: .5em;
@@ -117,20 +118,21 @@ div.parameter {
     align-items: center;
 }
 
-div.container-parameter-values {
+div.container-limit-values {
     /* border: 1px solid magenta; */
     margin-left: 1.5em;
+    width: 30%;
     padding: .5em .2em;
     display: flex;
 }
 
-p.parameter-value {
+p.limit-value {
     margin-left: 1em;
     margin-right: 1em;
     
 }
 
-#parameters button {
+#limits button {
     padding: 0 1em;
 }
 
@@ -159,29 +161,29 @@ td {
 
 /**** Style ****/
 
-section#parameters {
+section#limits {
     /* background: #143774; */
     color: black;
 }
 
-article.container-parameters {
+article.container-limits {
     
 }
 
-div.parameter {
+div.limit {
     background: #fcdf5f;
 }
 
-div.container-parameter-values {
+div.container-limit-values {
     background: black;
     color:#fcdf5f;
 }
 
-p.parameter-value {
+p.limit-value {
     
 }
 
-#parameters button {
+#limits button {
     background: black;
     color:#fcdf5f;
 }
