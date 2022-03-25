@@ -51,7 +51,6 @@ const timeUnits = {
 const convertTimeUnitsToSeconds = unitsObject => {
     const { days, hours, minutes, seconds } = unitsObject;
     const totalSeconds = days * 86400 + hours * 3600 + minutes * 60 + seconds;
-    console.log(totalSeconds);
     return totalSeconds;
 }
 

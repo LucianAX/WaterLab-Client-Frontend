@@ -163,6 +163,17 @@ div.container-values-units {
     border: none;
 }
 
+/* make arrows for number inputs disappear */
+input[type=number].time-value {
+    -moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/*  */
+
 .btn-edit-timer {
     /* font-size: 1rem;
     height: 3em;
