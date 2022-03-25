@@ -23,26 +23,36 @@
                     <div id="container-timedata-with-edit">
                         <div class="container-timedata">
                             <div class="container-values-units">
-                                <p class="time-value">XXX</p>
+                                <input class="time-value" type="text"
+                                    placeholder="---" maxlength="3" readonly
+                                />
                                 <p class="time-unit">ddd</p>
                             </div>
                             <p class="separator">:</p>
                             <div class="container-values-units">
-                                <p class="time-value">XX</p>
+                                <input class="time-value" type="text"
+                                    placeholder="--" maxlength="2" readonly
+                                />
                                 <p class="time-unit">hh</p>
                             </div>
                             <p class="separator">:</p>
                             <div class="container-values-units">
-                                <p class="time-value">XX</p>
+                                <input class="time-value" type="text"
+                                    placeholder="--" maxlength="2" readonly
+                                />
                                 <p class="time-unit">mm</p>
                             </div>
                             <p class="separator">:</p>
                             <div class="container-values-units">
-                                <p class="time-value">XX</p>
+                                <input class="time-value" type="text"
+                                    placeholder="--" maxlength="2" readonly
+                                />
                                 <p class="time-unit">ss</p>
                             </div>
                         </div>
-                        <button class="btn btn-edit-timer">Edit</button>
+                        <button class="btn-timer btn-edit-timer">Edit</button>
+                        <button class="btn-timer btn-accept-timer">Accept</button>
+                        <button class="btn-timer btn-reject-timer">Reject</button>
                     </div>
                 </div>
                 <div class="slider-timer">
@@ -57,22 +67,30 @@
                     <h3>Time until next measurement</h3>
                     <div class="container-timedata">
                         <div class="container-values-units">
-                            <p class="time-value">XXX</p>
+                            <input class="time-value" type="text"
+                                placeholder="---" maxlength="3" readonly
+                            />
                             <p class="time-unit">ddd</p>
                         </div>
                         <p class="separator">:</p>
                         <div class="container-values-units">
-                            <p class="time-value">XX</p>
+                            <input class="time-value" type="text"
+                                placeholder="--" maxlength="2" readonly
+                            />
                             <p class="time-unit">hh</p>
                         </div>
                         <p class="separator">:</p>
                         <div class="container-values-units">
-                            <p class="time-value">XX</p>
+                            <input class="time-value" type="text"
+                                placeholder="--" maxlength="2" readonly
+                            />
                             <p class="time-unit">mm</p>
                         </div>
                         <p class="separator">:</p>
                         <div class="container-values-units">
-                            <p class="time-value">XX</p>
+                            <input class="time-value" type="text"
+                                placeholder="--" maxlength="2" readonly
+                            />
                             <p class="time-unit">ss</p>
                         </div>
                     </div>
@@ -166,7 +184,7 @@
                 </table>
             </section>
         </main>
-        <script src='../scripts/timer.js'></script>
+        <script src='../scripts/utils/timer.js'></script>
         <script src='../scripts/limits_and_timer_behavior.js'></script>
         <script src='../scripts/slider_behavior.js'></script>
         <script src='../scripts/render_measurements.js'></script>

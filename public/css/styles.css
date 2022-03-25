@@ -30,8 +30,10 @@ h3 {
     font-size: 2.5rem;
 }
 
-p {
+p,
+input.time-value {
     font-size: 2rem;
+    text-align: center;
 }
 
 .container-slider p {
@@ -143,7 +145,8 @@ div.container-values-units {
     text-align: center;
 }
 
-.container-values-units p.time-value{
+.container-values-units input.time-value{
+    width: 2em;
     border-bottom: 2px solid black;
     padding-bottom: .2em;
 }
@@ -153,14 +156,28 @@ div.container-values-units {
     opacity: 50%;
 }
 
-.btn-edit-timer {
-    height: 4em;
+.btn-timer {
+    font-size: 1rem;
+    height: 3em;
     width: 4em;
-
-    background: yellow;
-    color: black;
     border: none;
 }
+
+.btn-edit-timer {
+    /* font-size: 1rem;
+    height: 3em;
+    width: 4em; */
+
+    background: #fcdf5f;
+    color: black;
+    /* border: none; */
+}
+
+.btn-accept-timer,
+.btn-reject-timer {
+    display: none;
+}
+
 
 /* .slider-timer {
     border: 1px dotted red;
