@@ -17,6 +17,67 @@
             <p id="request-measurement-message"></p>
         </aside>
         <main>
+            <section id="timers">
+                <div id="timer-static">
+                    <h3>Defined time interval</h3>
+                    <div id="container-timedata-with-edit">
+                        <div class="container-timedata">
+                            <div class="container-values-units">
+                                <p class="time-value">XXX</p>
+                                <p class="time-unit">ddd</p>
+                            </div>
+                            <p class="separator">:</p>
+                            <div class="container-values-units">
+                                <p class="time-value">XX</p>
+                                <p class="time-unit">hh</p>
+                            </div>
+                            <p class="separator">:</p>
+                            <div class="container-values-units">
+                                <p class="time-value">XX</p>
+                                <p class="time-unit">mm</p>
+                            </div>
+                            <p class="separator">:</p>
+                            <div class="container-values-units">
+                                <p class="time-value">XX</p>
+                                <p class="time-unit">ss</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-edit-timer">Edit</button>
+                    </div>
+                </div>
+                <div class="slider-timer">
+                    <section class="container-slider container-slider-timer">
+                        <p>Enabled</p>
+                        <input type="checkbox" id="decorator" class="decorator decorator-slider-timer" checked="false">
+                        <label for="decorator"></label>
+                        <p>Disabled</p>
+                    </section>
+                </div>
+                <div id="timer-dynamic">
+                    <h3>Time until next measurement</h3>
+                    <div class="container-timedata">
+                        <div class="container-values-units">
+                            <p class="time-value">XXX</p>
+                            <p class="time-unit">ddd</p>
+                        </div>
+                        <p class="separator">:</p>
+                        <div class="container-values-units">
+                            <p class="time-value">XX</p>
+                            <p class="time-unit">hh</p>
+                        </div>
+                        <p class="separator">:</p>
+                        <div class="container-values-units">
+                            <p class="time-value">XX</p>
+                            <p class="time-unit">mm</p>
+                        </div>
+                        <p class="separator">:</p>
+                        <div class="container-values-units">
+                            <p class="time-value">XX</p>
+                            <p class="time-unit">ss</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section id="limits">
                     <article id="container-minimums" class="container-limits">
                         <div class="limit">
@@ -65,10 +126,10 @@
                         </div>
                     </article>
             </section>
-            <section id="slider-container">
+            <section class="container-slider container-slider-table">
                 <p>measurements</p>
-                <input type="checkbox" id="decorator" class="decorator" checked="false">
-                <label for="decorator"></label>
+                <input type="checkbox" id="decorator-table-data" class="decorator decorator-slider-table" checked="false">
+                <label for="decorator-table-data"></label>
                 <p>warnings</p>
             </section>
             <section class="container-measurements">
@@ -105,8 +166,9 @@
                 </table>
             </section>
         </main>
+        <script src='../scripts/timer.js'></script>
+        <script src='../scripts/limits_and_timer_behavior.js'></script>
         <script src='../scripts/slider_behavior.js'></script>
-        <script src='../scripts/limits_behavior.js'></script>
         <script src='../scripts/render_measurements.js'></script>
         <script src='../scripts/render_warnings.js'></script>
         <script src='../scripts/request_measurement.js'></script>
