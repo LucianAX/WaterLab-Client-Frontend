@@ -45,3 +45,43 @@ async function requestUpdateStationaryUnitInterval(timeInterval) {
         console.log(err);
     }
 }
+
+async function requestPostMeasurement({
+        timestamp, phValue,
+        temperatureCelsius, electricConductivity
+    }) {
+    try {
+        const url = 'http://localhost:4000/api/measurements';
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'measurement': {
+                    timestamp: timestamp,
+                    phValue: phValue,
+                    tempC: temperatureCelsius,
+                    elecCond: electricConductivity,
+                    stationaryUnitID: 1 
+                }
+            })
+        });
+        
+        // handles response
+        if (response.ok) {
+            const jsonResponse = await response.json();
+            console.log(jsonResponse.measurement);
+
+            setTimeout(() => {
+                generateAnnouncement('Measurement received! Check latest entry in the list!');
+                prependIntoTable(jsonResponse.measurement);
+            }, 1000);
+            
+        } else {
+            throw new Error('Request failed!');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}

@@ -83,7 +83,8 @@ const timerElapse = () => {
             clearInterval(intervalID);
             //request measurement
             console.log('Requesting measurement');
-            sendPostRequest();
+            const measurementData = generateMeasurementData();
+            requestPostMeasurement(measurementData);
             
         } else if (remainingSeconds % 60 === 59) {
             insertTimerValues(remainingSeconds, 'dynamic');
