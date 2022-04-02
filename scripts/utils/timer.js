@@ -1,11 +1,19 @@
-const totalSeconds = 
-86400 * 3 + 3600 * 5 + 60 * 7 + 24;
+// 86400 * 3 + 3600 * 5 + 60 * 7 + 24;
 // 86400 * 3 + 3600 * 5 + 60 * 7;
 // 86400 * 3 + 3600 * 5;
 // 86400 * 3;
 // 0;
 
-console.log(`totalSecodns is ${totalSeconds}`);
+const extractTimeObject = () => {
+    const timeValuesArr = document.getElementsByClassName('time-value');
+    const timeObject = {
+        days: Number(timeValuesArr[0].value),
+        hours: Number(timeValuesArr[1].value),
+        minutes: Number(timeValuesArr[2].value),
+        seconds: Number(timeValuesArr[3].value)
+    };
+    return timeObject;
+}
 
 const convertSecondsToTimeUnits = inputSeconds => {
     const timeDivisors = [86400, 3600, 60];
@@ -18,16 +26,6 @@ const convertSecondsToTimeUnits = inputSeconds => {
     }
 
     timeQuotients.push(Math.floor(dividend));
-    // timeQuotients.forEach(item => console.log(item));
-    
-    // test
-    // timeQuotients.forEach(item => {
-    //     let limitsEl = document.querySelector('#limits');
-    //     let newEl = document.createElement('p');
-    //     newEl.textContent = item;
-    //     limitsEl.appendChild(newEl);
-    //     console.log(newEl);
-    // });
 
     return {
         days: timeQuotients[0],
@@ -37,35 +35,26 @@ const convertSecondsToTimeUnits = inputSeconds => {
     };
 }
 
-const unitsArr = convertSecondsToTimeUnits(totalSeconds);
-
-const timeUnits = {
-    days: unitsArr[0],
-    hours: unitsArr[1],
-    minutes: unitsArr[2],
-    seconds: unitsArr[3]
-}
-
-
-
 const convertTimeUnitsToSeconds = unitsObject => {
     const { days, hours, minutes, seconds } = unitsObject;
     const totalSeconds = days * 86400 + hours * 3600 + minutes * 60 + seconds;
     return totalSeconds;
 }
 
-convertTimeUnitsToSeconds(timeUnits);
+const insertTimerValues = (totalSeconds, timerType) => {
+    const timeUnits = convertSecondsToTimeUnits(totalSeconds);
 
-const timerElapse = (inputSeconds) => {
-    // --- Display all time units ---
-    
-    setInterval(() => {
-        inputSeconds -= 1000;
-        if (inputSeconds % 60 === 0) {
-            const timeUnits = convertSecondsToTimeUnits(inputSeconds);
-            // --- Display new units ---
-        } else {
-            // --- Display new number for seconds ---
-        }
-    }, 1000);
+    if (timerType === 'static') {
+        timeValuesArr[0].value = timeUnits.days;
+        timeValuesArr[1].value = timeUnits.hours;
+        timeValuesArr[2].value = timeUnits.minutes;
+        timeValuesArr[3].value = timeUnits.seconds;
+    } else if (timerType === 'dynamic') {
+        timeValuesArr[4].value = timeUnits.days;
+        timeValuesArr[5].value = timeUnits.hours;
+        timeValuesArr[6].value = timeUnits.minutes;
+        timeValuesArr[7].value = timeUnits.seconds;
+    } else {
+        throw new Error('Timer type non-existent');
+    }
 }

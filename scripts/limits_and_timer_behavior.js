@@ -1,4 +1,5 @@
 /****  Limits area  ****/
+
 const insertLimits = data => {
     const phMin = document.getElementById("pH-min");
     const phMax = document.getElementById("pH-max");
@@ -15,24 +16,15 @@ const insertLimits = data => {
     ecMax.textContent = data.limit_ec_maximum;
 }
 
+
 /**** Timer Area ****/
+
 const btnEditTimer = document.querySelector('.btn-edit-timer');
 const btnAcceptTimer = document.querySelector('.btn-accept-timer');
 const btnRejectTimer = document.querySelector('.btn-reject-timer')
 const timeValuesArr = document.getElementsByClassName('time-value');
 const initialStaticTimer = [];
 
-const insertStaticTimerValues = data => {
-    const timeValuesArr = document.getElementsByClassName('time-value');
-    
-    const totalSeconds = data.interval_execute_measurement;
-    const timeUnits = convertSecondsToTimeUnits(totalSeconds);
-
-    timeValuesArr[0].value = timeUnits.days;
-    timeValuesArr[1].value = timeUnits.hours;
-    timeValuesArr[2].value = timeUnits.minutes;
-    timeValuesArr[3].value = timeUnits.seconds;
-}
 
 const transitionEditingTimer = (edit, accept, reject, inputsReadOnly) => {
     btnEditTimer.style.display = edit;
@@ -49,6 +41,9 @@ btnEditTimer.addEventListener('click', () => {
 
     //save initial timer values in case reject btn is clicked
     for (var i = 0; i < 4; i++) {
+        initialStaticTimer.pop();
+    }
+    for (var i = 0; i < 4; i++) {
         initialStaticTimer.push(timeValuesArr[i].value);
     }
 });
@@ -63,18 +58,51 @@ btnRejectTimer.addEventListener('click', () => {
 });
 
 btnAcceptTimer.addEventListener('click', () => {
-    const timeObject = {
-        days: Number(timeValuesArr[0].value),
-        hours: Number(timeValuesArr[1].value),
-        minutes: Number(timeValuesArr[2].value),
-        seconds: Number(timeValuesArr[3].value)
-    };
+    const timeObject = extractTimeObject();
     
     const totalSeconds = convertTimeUnitsToSeconds(timeObject);
     requestUpdateStationaryUnitInterval(totalSeconds);
+    insertTimerValues(totalSeconds, 'dynamic');
     
     transitionEditingTimer('block', 'none', 'none', true);
 });
+
+
+//Timer countdown logic
+
+const isTimerActive = false;
+
+const timerElapse = () => {
+    // --- Display all time units ---
+    const timeObject = extractTimeObject();
+    let remainingSeconds = convertTimeUnitsToSeconds(timeObject);
+    
+    const intervalID = setInterval(() => {
+        remainingSeconds--;
+        if (remainingSeconds === -1) {
+            clearInterval(intervalID);
+            //request measurement
+            console.log('Requesting measurement');
+            sendPostRequest();
+            
+        } else if (remainingSeconds % 60 === 59) {
+            insertTimerValues(remainingSeconds, 'dynamic');
+        } else {
+            //Display number for seconds that is smaller by one than previous
+            timeValuesArr[7].value = Number(timeValuesArr[7].value) - 1;
+        }
+        
+        
+    }, 1000);
+}
+
+// if (isTimerActive) {
+    timerElapse();
+// }  
+
+
+
+
 
 
 /**** Both Limits and Timer Area ****/
@@ -82,5 +110,6 @@ btnAcceptTimer.addEventListener('click', () => {
 //feeding DB values into limits and timer
 requestGetStationaryUnitData().then((stationaryUnitData) => {
     insertLimits(stationaryUnitData);
-    insertStaticTimerValues(stationaryUnitData);
+    insertTimerValues(stationaryUnitData.interval_execute_measurement, 'static');
+    insertTimerValues(stationaryUnitData.interval_execute_measurement, 'dynamic');
 });
