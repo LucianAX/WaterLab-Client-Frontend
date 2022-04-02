@@ -1,6 +1,7 @@
 const btn = document.getElementById('request-measurement-button');
 
 btn.addEventListener('click', () => {
+    document.location.reload(true);
     sendPostRequest();
 });
 
