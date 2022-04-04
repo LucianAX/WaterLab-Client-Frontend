@@ -1,11 +1,10 @@
 const slider = document.getElementById('decorator-table-data')
-slider.checked = false;
 slider.addEventListener('click', () => check())
 
 const check = () => {
     const measContainer = document.querySelector('.container-measurements')
     const warnContainer = document.querySelector('.container-warnings')
-    const tableRow = document.querySelector('tbody')
+    const tableBody = document.querySelector('tbody')
 
     if (slider.checked) {
         // show warnings

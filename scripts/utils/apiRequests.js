@@ -35,14 +35,38 @@ async function requestUpdateStationaryUnitInterval(timeInterval) {
 
         if (response.ok) {
             const jsonResponse = await response.json();
-            console.log(jsonResponse.updatedInterval);
-            return jsonResponse.updatedInterval;
-        } else {
-            console.log('Request failed!');
+            // console.log(`Updated interval from DB: ${jsonResponse.updatedInterval}`);
+            return jsonResponse.updatedStationaryUnit.interval_execute_measurement;
         }
+        throw new Error('Request failed!');
+        
     }
     catch (err) {
         console.log(err);
+    }
+}
+
+async function requestUpdateStationaryUnitTimerStatus(status) {
+    try {
+        const url = 'http://localhost:4000/api/stationaryUnit/1';
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                'isTimerActive': status
+             })
+        });
+
+        if (response.ok) {
+            const jsonResponse = await response.json();
+            return jsonResponse.updatedStationaryUnit.is_timer_active;
+        }
+        throw new Error('Request failed!');
+    }
+    catch(error) {
+        console.log(error);
     }
 }
 

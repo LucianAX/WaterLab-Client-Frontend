@@ -18,12 +18,14 @@ const insertLimits = data => {
 
 
 /**** Timer Area ****/
-
 const btnEditTimer = document.querySelector('.btn-edit-timer');
 const btnAcceptTimer = document.querySelector('.btn-accept-timer');
 const btnRejectTimer = document.querySelector('.btn-reject-timer')
 const timeValuesArr = document.getElementsByClassName('time-value');
 const initialStaticTimer = [];
+const sliderTimer = document.getElementsByClassName('decorator-slider-timer')[0];
+let isTimerActive;
+console.log(`Slider timer: ${sliderTimer.checked}`)
 
 
 const transitionEditingTimer = (edit, accept, reject, inputsReadOnly) => {
@@ -65,12 +67,28 @@ btnAcceptTimer.addEventListener('click', () => {
     insertTimerValues(totalSeconds, 'dynamic');
     
     transitionEditingTimer('block', 'none', 'none', true);
+    isTimerActive = false; //deactivates previous ongoing timer (if it was active)
+    setTimeout(() => {
+        timerElapse();
+    }, 1500);
+    // timerElapse();
 });
+
+//Timer slider
+sliderTimer.addEventListener('click', (event) => {
+    isTimerActive = !event.target.checked; //NOTE: timer checked value corresponds to logic false (it is reverted - check slider in CSS)
+    // console.log(`IsTimerActive: ${isTimerActive}`);
+    
+    //Send PUT request
+    requestUpdateStationaryUnitTimerStatus(isTimerActive);
+    
+    //call timerElapse if the timer is enabled, else clear the old one if existing
+});
+
 
 
 //Timer countdown logic
 
-const isTimerActive = false;
 
 const timerElapse = () => {
     // --- Display all time units ---
@@ -78,19 +96,28 @@ const timerElapse = () => {
     let remainingSeconds = convertTimeUnitsToSeconds(timeObject);
     
     const intervalID = setInterval(() => {
-        remainingSeconds--;
-        if (remainingSeconds === -1) {
-            clearInterval(intervalID);
-            //request measurement
-            console.log('Requesting measurement');
-            const measurementData = generateMeasurementData();
-            requestPostMeasurement(measurementData);
-            
-        } else if (remainingSeconds % 60 === 59) {
-            insertTimerValues(remainingSeconds, 'dynamic');
-        } else {
-            //Display number for seconds that is smaller by one than previous
+        if (isTimerActive) {
+            remainingSeconds--;
+            // Display number for seconds that is smaller by one than previous
             timeValuesArr[7].value = Number(timeValuesArr[7].value) - 1;
+
+            if (remainingSeconds === 0) {
+                clearInterval(intervalID);
+                
+                //request measurement
+                // document.location.reload(true);
+                console.log('Requesting measurement');
+                const measurementData = generateMeasurementData();
+                requestPostMeasurement(measurementData);
+                
+            } else if (remainingSeconds % 60 === 59) {
+                insertTimerValues(remainingSeconds, 'dynamic');
+            } else {
+                //Display number for seconds that is smaller by one than previous
+                // timeValuesArr[7].value = Number(timeValuesArr[7].value) - 1;
+            }
+        } else {
+            clearInterval(intervalID);
         }
         
         
@@ -105,7 +132,6 @@ const timerElapse = () => {
 
 
 
-
 /**** Both Limits and Timer Area ****/
 
 //feeding DB values into limits and timer
@@ -113,4 +139,8 @@ requestGetStationaryUnitData().then((stationaryUnitData) => {
     insertLimits(stationaryUnitData);
     insertTimerValues(stationaryUnitData.interval_execute_measurement, 'static');
     insertTimerValues(stationaryUnitData.interval_execute_measurement, 'dynamic');
+    
+    //initialize Timer status
+    sliderTimer.checked = !stationaryUnitData.is_timer_active; //NOTE: timer checked value corresponds to logic false (it is reverted - check slider in CSS)
+    isTimerActive = stationaryUnitData.is_timer_active;
 });
