@@ -58,3 +58,22 @@ const insertTimerValues = (totalSeconds, timerType) => {
         throw new Error('Timer type non-existent');
     }
 }
+
+const validateTimerUserInput = timeObject => {
+    const { days, hours, minutes, seconds } = timeObject;
+    let result = [true]; //assume no error
+    let errorMsg = ''; 
+
+    if (days < 0 || days > 365) errorMsg += 'Days input was out of range!\n';
+    if (hours < 0 || hours > 23) errorMsg += 'Hours input was out of range!\n';
+    if (minutes < 0 || minutes > 59) errorMsg += 'Minutes input was out of range!\n';
+    if (seconds < 0 || seconds > 59) errorMsg += 'Seconds input was out of range!\n';
+    
+    if (errorMsg) {
+        result.pop();
+        result.push(false);
+        result.push(errorMsg);
+    }
+    
+    return result;
+}

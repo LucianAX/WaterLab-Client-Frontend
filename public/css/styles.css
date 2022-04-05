@@ -111,11 +111,11 @@ header {
 
 
 #timers div {
-    border: 1.7px dotted orange;
+    /* border: 1.7px dotted orange; */
 }
 
 section#timers {
-    border: 1px solid magenta;
+    /* border: 1px solid magenta; */
     max-width: 50%;
     margin: 5em auto;
 }

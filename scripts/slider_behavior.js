@@ -1,4 +1,5 @@
 const slider = document.getElementById('decorator-table-data')
+slider.checked = false;
 slider.addEventListener('click', () => check())
 
 const check = () => {

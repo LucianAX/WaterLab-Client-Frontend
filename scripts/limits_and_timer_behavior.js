@@ -21,11 +21,11 @@ const insertLimits = data => {
 const btnEditTimer = document.querySelector('.btn-edit-timer');
 const btnAcceptTimer = document.querySelector('.btn-accept-timer');
 const btnRejectTimer = document.querySelector('.btn-reject-timer')
-const timeValuesArr = document.getElementsByClassName('time-value');
-const initialStaticTimer = [];
+const timeValuesArr = document.getElementsByClassName('time-value'); //stores all 8 time values from both static and dynamic timers
+const initialStaticTimer = []; //stores initial static timer values before accepting changes  so it can be used in case of change rejection
 const sliderTimer = document.getElementsByClassName('decorator-slider-timer')[0];
 let isTimerActive;
-console.log(`Slider timer: ${sliderTimer.checked}`)
+let intervalID; // ID of setInterval() that does the countdown
 
 
 const transitionEditingTimer = (edit, accept, reject, inputsReadOnly) => {
@@ -61,17 +61,24 @@ btnRejectTimer.addEventListener('click', () => {
 
 btnAcceptTimer.addEventListener('click', () => {
     const timeObject = extractTimeObject();
+    const validation = validateTimerUserInput(timeObject);
+    if (validation[0]) {
+        const totalSeconds = convertTimeUnitsToSeconds(timeObject);
+        requestUpdateStationaryUnitInterval(totalSeconds);
+
+        insertTimerValues(totalSeconds, 'dynamic');
     
-    const totalSeconds = convertTimeUnitsToSeconds(timeObject);
-    requestUpdateStationaryUnitInterval(totalSeconds);
-    insertTimerValues(totalSeconds, 'dynamic');
+        transitionEditingTimer('block', 'none', 'none', true);
     
-    transitionEditingTimer('block', 'none', 'none', true);
-    isTimerActive = false; //deactivates previous ongoing timer (if it was active)
-    setTimeout(() => {
-        timerElapse();
-    }, 1500);
-    // timerElapse();
+        isTimerActive = false; //deactivates previous ongoing timer (if it was active)
+        setTimeout(() => {
+            timerElapse();
+        }, 1500);
+        // timerElapse();
+    } else {
+        alert(validation[1]);
+        btnRejectTimer.click();
+    }  
 });
 
 //Timer slider
@@ -95,7 +102,7 @@ const timerElapse = () => {
     const timeObject = extractTimeObject();
     let remainingSeconds = convertTimeUnitsToSeconds(timeObject);
     
-    const intervalID = setInterval(() => {
+    intervalID = setInterval(() => {
         if (isTimerActive) {
             remainingSeconds--;
             // Display number for seconds that is smaller by one than previous
@@ -124,10 +131,6 @@ const timerElapse = () => {
     }, 1000);
 }
 
-// if (isTimerActive) {
-    timerElapse();
-// }  
-
 
 
 
@@ -142,5 +145,8 @@ requestGetStationaryUnitData().then((stationaryUnitData) => {
     
     //initialize Timer status
     sliderTimer.checked = !stationaryUnitData.is_timer_active; //NOTE: timer checked value corresponds to logic false (it is reverted - check slider in CSS)
-    isTimerActive = stationaryUnitData.is_timer_active;
+    isTimerActive = stationaryUnitData.is_timer_active === 1 ? true : false;
+    if (isTimerActive) {
+        timerElapse()
+    }
 });
