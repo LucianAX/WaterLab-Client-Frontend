@@ -103,6 +103,7 @@ const timerElapse = () => {
     // --- Display all time units ---
     const timeObject = extractTimeObject();
     let remainingSeconds = convertTimeUnitsToSeconds(timeObject);
+    insertTimerValues(remainingSeconds, 'dynamic');
     
     intervalID = setInterval(() => {
         if (isTimerActive) {
@@ -113,17 +114,15 @@ const timerElapse = () => {
             if (remainingSeconds === 0) {
                 clearInterval(intervalID);
                 
-                //request measurement
-                console.log('Requesting measurement');
-                const measurementData = generateMeasurementData();
-                requestPostMeasurement(measurementData);
+                //generate measurement data and send POST request
+                btnRequestMeasurement.click();     
                 
+                // setTimeout(() => {
+                    timerElapse();
+                // }, 5000);
             } else if (remainingSeconds % 60 === 59) {
                 insertTimerValues(remainingSeconds, 'dynamic');
-            } else {
-                //Display number for seconds that is smaller by one than previous
-                // timeValuesArr[7].value = Number(timeValuesArr[7].value) - 1;
-            }
+            } 
         } else {
             clearInterval(intervalID);
         }
