@@ -62,19 +62,18 @@ btnRejectTimer.addEventListener('click', () => {
 btnAcceptTimer.addEventListener('click', () => {
     const timeObject = extractTimeObject();
     const validation = validateTimerUserInput(timeObject);
+    
     if (validation[0]) {
         const totalSeconds = convertTimeUnitsToSeconds(timeObject);
+        
         requestUpdateStationaryUnitInterval(totalSeconds);
-
         insertTimerValues(totalSeconds, 'dynamic');
-    
         transitionEditingTimer('block', 'none', 'none', true);
     
+        if (intervalID) clearInterval (intervalID);
         isTimerActive = false; //deactivates previous ongoing timer (if it was active)
-        setTimeout(() => {
-            timerElapse();
-        }, 1500);
-        // timerElapse();
+        sliderTimer.checked = true; //deactivate timer
+        
     } else {
         alert(validation[1]);
         btnRejectTimer.click();
@@ -84,19 +83,22 @@ btnAcceptTimer.addEventListener('click', () => {
 //Timer slider
 sliderTimer.addEventListener('click', (event) => {
     isTimerActive = !event.target.checked; //NOTE: timer checked value corresponds to logic false (it is reverted - check slider in CSS)
-    // console.log(`IsTimerActive: ${isTimerActive}`);
-    
-    //Send PUT request
     requestUpdateStationaryUnitTimerStatus(isTimerActive);
     
     //call timerElapse if the timer is enabled, else clear the old one if existing
+    if (isTimerActive) {
+        timerElapse();
+    } else {
+        //reset Interval on disable action
+        clearInterval(intervalID);
+        for (var i = 0; i < 4; i++) {
+            timeValuesArr[i + 4].value = timeValuesArr[i].value;
+        }
+    }
 });
 
 
-
 //Timer countdown logic
-
-
 const timerElapse = () => {
     // --- Display all time units ---
     const timeObject = extractTimeObject();
@@ -130,8 +132,6 @@ const timerElapse = () => {
         
     }, 1000);
 }
-
-
 
 
 
