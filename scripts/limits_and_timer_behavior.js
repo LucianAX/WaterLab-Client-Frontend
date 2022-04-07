@@ -114,7 +114,6 @@ const timerElapse = () => {
                 clearInterval(intervalID);
                 
                 //request measurement
-                // document.location.reload(true);
                 console.log('Requesting measurement');
                 const measurementData = generateMeasurementData();
                 requestPostMeasurement(measurementData);

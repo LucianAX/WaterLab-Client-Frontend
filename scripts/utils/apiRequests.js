@@ -95,13 +95,7 @@ async function requestPostMeasurement({
         // handles response
         if (response.ok) {
             const jsonResponse = await response.json();
-            console.log(jsonResponse.measurement);
-
-            setTimeout(() => {
-                generateAnnouncement('Measurement received! Check latest entry in the list!');
-                prependIntoTable(jsonResponse.measurement);
-            }, 1000);
-            
+            return jsonResponse.measurement;            
         } else {
             throw new Error('Request failed!');
         }

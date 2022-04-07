@@ -45,7 +45,7 @@ const prependIntoTable = measurement => {
     measurementsTable.insertBefore(newTableRow, measurementsTable.childNodes[0]);
 }
 
-const generateAnnouncement = text => {
+const announce = text => {
     const announcement = document.getElementById("request-measurement-message");
     announcement.textContent = text;
     announcement.style.display = 'inline';
