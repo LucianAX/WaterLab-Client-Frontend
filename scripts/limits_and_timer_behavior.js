@@ -1,22 +1,3 @@
-/****  Limits area  ****/
-
-const insertLimits = data => {
-    const phMin = document.getElementById("pH-min");
-    const phMax = document.getElementById("pH-max");
-    const tempMin = document.getElementById("temp-min");
-    const tempMax = document.getElementById("temp-max");
-    const ecMin = document.getElementById("ec-min");
-    const ecMax = document.getElementById("ec-max");
-
-    phMin.textContent = data.limit_ph_minimum;
-    phMax.textContent = data.limit_ph_maximum;
-    tempMin.textContent = data.limit_temp_minimum;
-    tempMax.textContent = data.limit_temp_maximum;
-    ecMin.textContent = data.limit_ec_minimum;
-    ecMax.textContent = data.limit_ec_maximum;
-}
-
-
 /**** Timer Area ****/
 const btnEditTimer = document.querySelector('.btn-edit-timer');
 const btnAcceptTimer = document.querySelector('.btn-accept-timer');
@@ -131,6 +112,124 @@ const timerElapse = () => {
     }, 1000);
 }
 
+
+/****  Limits area  ****/
+
+const btnCollEditLimit = document.getElementsByClassName('btn-limit-edit');
+const btnCollAcceptLimit = document.getElementsByClassName('btn-limit-accept');
+const btnCollRejectLimit = document.getElementsByClassName('btn-limit-reject');
+
+let initialLimits = {};
+let limitValuesColl = document. getElementsByClassName('limit-value');
+for (limitEl of limitValuesColl) {
+    initialLimits[limitEl.id] = limitEl.value;
+}
+
+const insertLimits = data => {
+    const phMin = document.getElementById("ph-min");
+    const phMax = document.getElementById("ph-max");
+    const tempMin = document.getElementById("temp-min");
+    const tempMax = document.getElementById("temp-max");
+    const ecMin = document.getElementById("ec-min");
+    const ecMax = document.getElementById("ec-max");
+
+    phMin.value = data.limit_ph_minimum;
+    phMax.value = data.limit_ph_maximum;
+    tempMin.value = data.limit_temp_minimum;
+    tempMax.value = data.limit_temp_maximum;
+    ecMin.value = data.limit_ec_minimum;
+    ecMax.value = data.limit_ec_maximum;
+}
+
+
+
+// const blabla_transitionEditingTimer = (edit, accept, reject, inputsReadOnly) => {
+//     btnEditTimer.style.display = edit;
+//     btnAcceptTimer.style.display = accept;
+//     btnRejectTimer.style.display = reject;
+//     for (var i = 0; i < 4; i++) {
+//         timeValuesArr[i].readOnly = inputsReadOnly;
+//     }
+// }
+
+// const transitionInput = (edit, accept, reject, inputsReadOnly) => {
+
+// }
+
+const btnLimitEditListener = event => {
+    //make edit btn disappear, corresponding accept and reject btns appear and input element editable
+    const btnEditName = event.target.name;
+    const inputEl = document.getElementById(btnEditName);
+
+    const btnAccept = Object.values(btnCollAcceptLimit).find(btnAccept => btnAccept.name === btnEditName);
+    const btnReject = Object.values(btnCollRejectLimit).find(btnReject => btnReject.name === btnEditName);
+
+    event.target.style.display = 'none';
+    btnAccept.style.display = 'block';
+    btnReject.style.display = 'block';       
+    inputEl.readOnly = false;
+}
+
+const btnLimitRejectListener = event => {
+    const btnRejectName = event.target.name;
+    const inputEl = document.getElementById(btnRejectName);
+
+    const btnEdit = Object.values(btnCollEditLimit).find(btnEdit => btnEdit.name === btnRejectName);
+    const btnAccept = Object.values(btnCollAcceptLimit).find(btnAccept => btnAccept.name === btnRejectName);
+    
+    inputEl.value = initialLimits[btnRejectName];
+
+    event.target.style.display = 'none';
+    btnAccept.style.display = 'none';
+    btnEdit.style.display = 'block';
+    inputEl.readOnly = true;
+}
+
+const btnLimitAcceptListener = event => {
+    const btnAcceptName = event.target.name;
+    const inputEl = document.getElementById(btnAcceptName);
+
+    const btnEdit = Object.values(btnCollEditLimit).find(btnEdit => btnEdit.name === btnAcceptName);
+    const btnReject = Object.values(btnCollRejectLimit).find(btnReject => btnReject.name === btnAcceptName);
+
+    //Compare corresponding input limit value with the peer limit value
+    const nameArr = btnAcceptName.split('-');
+    let peerInputName = nameArr[0] + '-';
+    peerInputName += nameArr[1] == 'max' ? 'min' : 'max'; 
+    let peerInputEl = document.getElementById(peerInputName);
+
+    const validationResult = validateNewLimit(
+        nameArr[1],
+        Number(inputEl.value),
+        Number(peerInputEl.value),
+        event.target.parentElement.children    
+    );  //positive: [true]
+        //negative: [false, errMsg, child]
+    
+    if (!validationResult[0]) {
+        alert(validationResult[1]);
+        validationResult[2].click();
+    } else {
+        //send PUT
+        event.target.style.display = 'none';
+        btnReject.style.display = 'none';
+        btnEdit.style.display = 'block';
+        inputEl.readOnly = true;
+    }
+}
+
+const collContainerLimits = document.querySelectorAll('.container-limit-values');
+for (container of collContainerLimits) {
+    container.addEventListener('click', event => {
+        if (event.target.classList.contains('btn-limit-edit')) {
+            btnLimitEditListener(event);
+        } else if (event.target.classList.contains('btn-limit-reject')) {
+            btnLimitRejectListener(event);
+        } else if (event.target.classList.contains('btn-limit-accept')) {
+            btnLimitAcceptListener(event);
+        }
+    });
+}
 
 
 /**** Both Limits and Timer Area ****/

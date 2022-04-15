@@ -31,9 +31,25 @@ h3 {
 }
 
 p,
-input.time-value {
+input.time-value,
+input.limit-value {
     font-size: 2rem;
+} 
+    
+input.time-value {
     text-align: center;
+}
+
+section#limits {
+    font-size: 1.5rem;
+}
+
+.limit p {
+    text-align: left;
+}
+
+input.limit-value {
+    font-size: 2rem;
 }
 
 .container-slider p {
@@ -53,10 +69,6 @@ td {
 
 header, tr {
     background: #66C4FF;
-}
-
-section#limits {
-    font-size: 1.5rem;
 }
 
 /* ========== LAYOUT ========= */
@@ -164,7 +176,7 @@ div.container-values-units {
 }
 
 /* make arrows for number inputs disappear */
-input[type=number].time-value {
+input[type=number] {
     -moz-appearance: textfield;
 }
 input::-webkit-outer-spin-button,
@@ -188,7 +200,6 @@ input::-webkit-inner-spin-button {
 .btn-reject-timer {
     display: none;
 }
-
 
 /* .slider-timer {
     border: 1px dotted red;
@@ -219,26 +230,36 @@ div.limit {
 }
 
 p.limit-text {
-    max-width: 70%;
+    width: 70%;
 }
 
 div.container-limit-values {
+    
     /* margin-left: 1.5em; */
-    width: 30%;
+    width: 40%;
     padding: .5em .8em;
     display: flex;
     justify-content: space-between;
 }
 
-p.limit-value {
-    /* margin-left: 1em; */
-    /* margin-right: .5em; */
+input.limit-value {
+    border: 2px dotted white;
+    color: white;
+    max-width: 40%;
 }
 
-#limits button {
+.btn-limit {
     padding: 0 1em;
+   
 }
 
+.btn-limit-accept,
+.btn-limit-reject {
+    display: none;
+}
+
+
+/*** Measurements and Warnings ***/
 .container-warnings {
     display: none;
 }
@@ -264,14 +285,6 @@ td {
 
 /* ========== STYLE ========= */
 
-section#limits {
-    color: black;
-}
-
-article.container-limits {
-    
-}
-
 div.limit {
     background: #fcdf5f;
 }
@@ -281,15 +294,14 @@ div.container-limit-values {
     color:#fcdf5f;
 }
 
-p.limit-value {
-    
+input.limit-value {
+    color: #fcdf5f;
 }
 
-#limits button {
-    background: black;
-    color:#fcdf5f;
+.btn-limit {
+    background: #fcdf5f;
+    color: black;
 }
-
 
 #slider-container p {
     margin: .5em 1em;

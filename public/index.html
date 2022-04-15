@@ -101,22 +101,28 @@
                         <div class="limit">
                             <p class="limit-text">Minimum pH: </p>
                             <div class="container-limit-values">
-                                <p id="pH-min" class="limit-value">X</p>
-                                <button>Edit</button>
+                                <input id="ph-min" class="limit-value" type="number" placeholder="--" maxlength="2" readonly />
+                                <button class="btn-limit btn-limit-edit" name="ph-min">Edit</button>
+                                <button class="btn-limit btn-limit-accept" name="ph-min">Accept</button>
+                                <button class="btn-limit btn-limit-reject" name="ph-min">Reject</button>
                             </div>
                         </div>
                         <div class="limit">
                             <p class="limit-text">Minimum temperature (°C): </p>
                             <div class="container-limit-values">
-                                <p id="temp-min" class="limit-value">X</p>
-                                <button>Edit</button>
+                                <input id="temp-min" class="limit-value" type="number" placeholder="----" maxlength="4" readonly />
+                                <button class="btn-limit btn-limit-edit" name="temp-min">Edit</button>
+                                <button class="btn-limit btn-limit-accept" name="temp-min">Accept</button>
+                                <button class="btn-limit btn-limit-reject" name="temp-min">Reject</button>
                             </div>
                         </div>
                         <div class="limit">
                             <p class="limit-text">Minimum electrical conductivity (S/m): </p>
                             <div class="container-limit-values">
-                                <p id="ec-min" class="limit-value">X</p>
-                                <button>Edit</button>
+                                <input id="ec-min" class="limit-value" type="number" placeholder="-----" maxlength="5" readonly />
+                                <button class="btn-limit btn-limit-edit" name="ec-min">Edit</button>
+                                <button class="btn-limit btn-limit-accept" name="ec-min">Accept</button>
+                                <button class="btn-limit btn-limit-reject" name="ec-min">Reject</button>
                             </div>
                         </div>
                     </article>
@@ -124,22 +130,28 @@
                         <div class="limit">
                             <p class="limit-text">Maximum pH: </p>
                             <div class="container-limit-values">
-                                <p id="pH-max" class="limit-value">X</p>
-                                <button>Edit</button>
+                                <input id="ph-max" class="limit-value" type="number" placeholder="--" maxlength="2" readonly />
+                                <button class="btn-limit btn-limit-edit" name="ph-max">Edit</button>
+                                <button class="btn-limit btn-limit-accept" name="ph-max">Accept</button>
+                                <button class="btn-limit btn-limit-reject" name="ph-max">Reject</button>
                             </div>
                         </div>
                         <div class="limit">
                             <p class="limit-text">Maximum temperature (°C): </p>
                             <div class="container-limit-values">
-                                <p id="temp-max" class="limit-value">X</p>
-                                <button>Edit</button>
+                                <input id="temp-max" class="limit-value" type="number" placeholder="----" maxlength="4" readonly />
+                                <button class="btn-limit btn-limit-edit" name="temp-max">Edit</button>
+                                <button class="btn-limit btn-limit-accept" name="temp-max">Accept</button>
+                                <button class="btn-limit btn-limit-reject" name="temp-max">Reject</button>
                             </div>
                         </div>
                         <div class="limit">
                             <p class="limit-text">Maximum electrical conductivity (S/m): </p>
                             <div class="container-limit-values">
-                                <p id="ec-max" class="limit-value">X</p>
-                                <button>Edit</button>
+                                <input id="ec-max" class="limit-value" type="number" placeholder="-----" maxlength="5" readonly />
+                                <button class="btn-limit btn-limit-edit" name="ec-max">Edit</button>
+                                <button class="btn-limit btn-limit-accept" name="ec-max">Accept</button>
+                                <button class="btn-limit btn-limit-reject" name="ec-max">Reject</button>
                             </div>
                         </div>
                     </article>
@@ -186,6 +198,7 @@
         </main>
         <script src='../scripts/utils/apiRequests.js'></script>
         <script src='../scripts/utils/timer.js'></script>
+        <script src='../scripts/utils/limits.js'></script>
         <script src='../scripts/utils/measurement.js'></script>
         <script src='../scripts/limits_and_timer_behavior.js'></script>
         <script src='../scripts/slider_behavior.js'></script>
