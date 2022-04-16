@@ -118,12 +118,8 @@ const timerElapse = () => {
 const btnCollEditLimit = document.getElementsByClassName('btn-limit-edit');
 const btnCollAcceptLimit = document.getElementsByClassName('btn-limit-accept');
 const btnCollRejectLimit = document.getElementsByClassName('btn-limit-reject');
+let initialLimits = {}; //for saving initial limits before any changes
 
-let initialLimits = {};
-let limitValuesColl = document. getElementsByClassName('limit-value');
-for (limitEl of limitValuesColl) {
-    initialLimits[limitEl.id] = limitEl.value;
-}
 
 const insertLimits = data => {
     const phMin = document.getElementById("ph-min");
@@ -141,6 +137,12 @@ const insertLimits = data => {
     ecMax.value = data.limit_ec_maximum;
 }
 
+const saveInitialLimits = () => {
+    let limitValuesColl = document. getElementsByClassName('limit-value');
+    for (limitEl of limitValuesColl) {
+        initialLimits[limitEl.id] = limitEl.value;
+    }
+}
 
 
 // const blabla_transitionEditingTimer = (edit, accept, reject, inputsReadOnly) => {
@@ -192,7 +194,7 @@ const btnLimitAcceptListener = event => {
     const btnEdit = Object.values(btnCollEditLimit).find(btnEdit => btnEdit.name === btnAcceptName);
     const btnReject = Object.values(btnCollRejectLimit).find(btnReject => btnReject.name === btnAcceptName);
 
-    //Compare corresponding input limit value with the peer limit value
+    //use name attribute to fetch peer input limit value
     const nameArr = btnAcceptName.split('-');
     let peerInputName = nameArr[0] + '-';
     peerInputName += nameArr[1] == 'max' ? 'min' : 'max'; 
@@ -200,8 +202,8 @@ const btnLimitAcceptListener = event => {
 
     const validationResult = validateNewLimit(
         nameArr[1],
-        Number(inputEl.value),
-        Number(peerInputEl.value),
+        inputEl.value,
+        peerInputEl.value,
         event.target.parentElement.children    
     );  //positive: [true]
         //negative: [false, errMsg, child]
@@ -210,17 +212,29 @@ const btnLimitAcceptListener = event => {
         alert(validationResult[1]);
         validationResult[2].click();
     } else {
+        //get type of limit as named in DB
+        const limitType = matchLimitType(btnAcceptName);
+        
         //send PUT
-        event.target.style.display = 'none';
-        btnReject.style.display = 'none';
-        btnEdit.style.display = 'block';
-        inputEl.readOnly = true;
+        requestUpdateStationaryUnitLimit(limitType, inputEl.value)
+            .then(updatedStationaryUnit => {
+                console.log(updatedStationaryUnit);
+
+                inputEl.value = updatedStationaryUnit[limitType];
+                initialLimits[btnAcceptName] = updatedStationaryUnit[limitType];
+                
+                event.target.style.display = 'none';
+                btnReject.style.display = 'none';
+                btnEdit.style.display = 'block';
+                inputEl.readOnly = true;
+            });
     }
 }
 
-const collContainerLimits = document.querySelectorAll('.container-limit-values');
-for (container of collContainerLimits) {
-    container.addEventListener('click', event => {
+{
+    //add click event listener for all containers with limit values
+    const collContainerLimits = document.querySelectorAll('.container-limit-values');
+    const handleLimitBtnClick = event => {
         if (event.target.classList.contains('btn-limit-edit')) {
             btnLimitEditListener(event);
         } else if (event.target.classList.contains('btn-limit-reject')) {
@@ -228,15 +242,19 @@ for (container of collContainerLimits) {
         } else if (event.target.classList.contains('btn-limit-accept')) {
             btnLimitAcceptListener(event);
         }
-    });
+    }
+    
+    for (container of collContainerLimits) {
+        container.addEventListener('click', handleLimitBtnClick);
+    }
 }
-
 
 /**** Both Limits and Timer Area ****/
 
 //feeding DB values into limits and timer
 requestGetStationaryUnitData().then((stationaryUnitData) => {
     insertLimits(stationaryUnitData);
+    saveInitialLimits();
     insertTimerValues(stationaryUnitData.interval_execute_measurement, 'static');
     insertTimerValues(stationaryUnitData.interval_execute_measurement, 'dynamic');
     

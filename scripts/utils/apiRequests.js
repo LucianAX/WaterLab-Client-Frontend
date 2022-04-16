@@ -46,16 +46,16 @@ async function requestUpdateStationaryUnitInterval(timeInterval) {
     }
 }
 
-async function requestUpdateStationaryUnitTimerStatus(status) {
+async function requestUpdateStationaryUnitTimerStatus(timerStatus) {
     try {
         const url = 'http://localhost:4000/api/stationaryUnit/1';
-        const response = await fetch(url, {
+        const response = await fetch (url, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
-                'isTimerActive': status
+                'isTimerActive': timerStatus
              })
         });
 
@@ -66,6 +66,31 @@ async function requestUpdateStationaryUnitTimerStatus(status) {
         throw new Error('Request failed!');
     }
     catch(error) {
+        console.log(error);
+    }
+}
+
+async function requestUpdateStationaryUnitLimit(newLimitType, newLimitValue) {
+    try {
+        const url = 'http://localhost:4000/api/stationaryUnit/1';
+        const response = await fetch (url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'limitType': newLimitType,
+                'limitValue': newLimitValue
+            })
+        });
+
+        if (response.ok) {
+            const jsonResponse = await response.json();
+            return jsonResponse.updatedStationaryUnit;
+        }
+        throw new Error('Request failed!');
+    }
+    catch (error) {
         console.log(error);
     }
 }
