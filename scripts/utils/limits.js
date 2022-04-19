@@ -1,3 +1,36 @@
+const identifyLimitBtn = (btnType, btnName) => {
+    const btnCollEditLimit = document.getElementsByClassName('btn-limit-edit');
+    const btnCollAcceptLimit = document.getElementsByClassName('btn-limit-accept');
+    const btnCollRejectLimit = document.getElementsByClassName('btn-limit-reject');
+    let btnsCollection;
+
+    switch(btnType) {
+        case 'edit':
+            btnsCollection = btnCollEditLimit;
+            break;       
+        case 'accept':
+            btnsCollection = btnCollAcceptLimit;
+            break; 
+        case 'reject':
+            btnsCollection = btnCollRejectLimit;
+            break;
+        default:
+            break;
+    }
+    
+    return Object.values(btnsCollection).find(btn => btn.name === btnName);
+}
+
+const transitionLimitBtns = (currentBtnName) => {
+        const btnEdit = identifyLimitBtn('edit', currentBtnName);
+        const btnAccept = identifyLimitBtn('accept', currentBtnName);
+        const btnReject = identifyLimitBtn('reject', currentBtnName);
+
+        btnEdit.style.display = (btnEdit.style.display === 'block' || !btnEdit.style.display) ? 'none' : 'block';
+        btnAccept.style.display = btnAccept.style.display === 'block' ? 'none' : 'block';
+        btnReject.style.display = btnReject.style.display === 'block' ? 'none' : 'block';
+}
+
 const matchLimitType = markupName => {
     switch (markupName) {
         case 'ph-min':

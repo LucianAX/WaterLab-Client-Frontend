@@ -115,9 +115,6 @@ const timerElapse = () => {
 
 /****  Limits area  ****/
 
-const btnCollEditLimit = document.getElementsByClassName('btn-limit-edit');
-const btnCollAcceptLimit = document.getElementsByClassName('btn-limit-accept');
-const btnCollRejectLimit = document.getElementsByClassName('btn-limit-reject');
 let initialLimits = {}; //for saving initial limits before any changes
 
 
@@ -144,55 +141,27 @@ const saveInitialLimits = () => {
     }
 }
 
-
-// const blabla_transitionEditingTimer = (edit, accept, reject, inputsReadOnly) => {
-//     btnEditTimer.style.display = edit;
-//     btnAcceptTimer.style.display = accept;
-//     btnRejectTimer.style.display = reject;
-//     for (var i = 0; i < 4; i++) {
-//         timeValuesArr[i].readOnly = inputsReadOnly;
-//     }
-// }
-
-// const transitionInput = (edit, accept, reject, inputsReadOnly) => {
-
-// }
-
 const btnLimitEditListener = event => {
-    //make edit btn disappear, corresponding accept and reject btns appear and input element editable
     const btnEditName = event.target.name;
     const inputEl = document.getElementById(btnEditName);
 
-    const btnAccept = Object.values(btnCollAcceptLimit).find(btnAccept => btnAccept.name === btnEditName);
-    const btnReject = Object.values(btnCollRejectLimit).find(btnReject => btnReject.name === btnEditName);
-
-    event.target.style.display = 'none';
-    btnAccept.style.display = 'block';
-    btnReject.style.display = 'block';       
+    //make edit btn disappear, corresponding accept and reject btns appear and input element editable
+    transitionLimitBtns(btnEditName);
     inputEl.readOnly = false;
 }
 
 const btnLimitRejectListener = event => {
     const btnRejectName = event.target.name;
     const inputEl = document.getElementById(btnRejectName);
-
-    const btnEdit = Object.values(btnCollEditLimit).find(btnEdit => btnEdit.name === btnRejectName);
-    const btnAccept = Object.values(btnCollAcceptLimit).find(btnAccept => btnAccept.name === btnRejectName);
-    
     inputEl.value = initialLimits[btnRejectName];
 
-    event.target.style.display = 'none';
-    btnAccept.style.display = 'none';
-    btnEdit.style.display = 'block';
+    transitionLimitBtns(btnRejectName);
     inputEl.readOnly = true;
 }
 
 const btnLimitAcceptListener = event => {
     const btnAcceptName = event.target.name;
     const inputEl = document.getElementById(btnAcceptName);
-
-    const btnEdit = Object.values(btnCollEditLimit).find(btnEdit => btnEdit.name === btnAcceptName);
-    const btnReject = Object.values(btnCollRejectLimit).find(btnReject => btnReject.name === btnAcceptName);
 
     //use name attribute to fetch peer input limit value
     const nameArr = btnAcceptName.split('-');
@@ -218,14 +187,10 @@ const btnLimitAcceptListener = event => {
         //send PUT
         requestUpdateStationaryUnitLimit(limitType, inputEl.value)
             .then(updatedStationaryUnit => {
-                console.log(updatedStationaryUnit);
-
                 inputEl.value = updatedStationaryUnit[limitType];
                 initialLimits[btnAcceptName] = updatedStationaryUnit[limitType];
                 
-                event.target.style.display = 'none';
-                btnReject.style.display = 'none';
-                btnEdit.style.display = 'block';
+                transitionLimitBtns(btnAcceptName);
                 inputEl.readOnly = true;
             });
     }
