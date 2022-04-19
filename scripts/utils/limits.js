@@ -52,14 +52,20 @@ const matchLimitType = markupName => {
 }
 
 const validateNewLimit = (
-    currentInputType,
-    currentInputValue,
-    peerInputValue,
-    childrenCollection
+        currentInputType, currentInputValue,
+        peerInputValue, childrenCollection
     ) => {
     //assume new limit is valid
     let result = [true];
     let errMsg = "";
+    
+    //thresholds for possible parameter values
+    const phMinThreshold = 6.0;
+    const phMaxThreshold = 8.0;
+    const tempMinThreshold = 7.00;
+    const tempMaxThreshold = 15.00;
+    const ecMinThreshold = 0.005;
+    const ecMaxThreshold = 0.05;
 
     //check against no input
     if (!currentInputValue) {
@@ -68,22 +74,26 @@ const validateNewLimit = (
         currentInputValue = Number(currentInputValue);
         peerInputValue = Number(peerInputValue);
 
-        //check against peer input value and absolute value
-        if (currentInputType == 'max') {
+        //check against peer input value and absolute value thresholds
+        if (currentInputType[1] == 'max') {
             if (currentInputValue <= peerInputValue) {
                 errMsg = 'Error! Maximum value needs to be higher than minimum value!';
             } 
-            // else if () {
-
-            // }
+            else if ( currentInputType[0] == 'ph' && currentInputValue > phMaxThreshold
+                    || currentInputType[0] == 'temp' && currentInputValue > tempMaxThreshold
+                    || currentInputType[0] == 'ec' && currentInputValue > ecMaxThreshold ) {
+                errMsg = 'Error! You have inserted a maximum value beyond the permitted threshold!';
+            }
         }
-        else if (currentInputType == 'min') {
+        else if (currentInputType[1] == 'min') {
             if (currentInputValue >= peerInputValue) {
                 errMsg = 'Error! Minimum value needs to be lower than maximum value!';
             }
-            // else if {
-
-            // }
+            else if ( currentInputType[0] == 'ph' && currentInputValue < phMinThreshold
+                    || currentInputType[0] == 'temp' && currentInputValue < tempMinThreshold
+                    || currentInputType[0] == 'ec' && currentInputValue < ecMinThreshold ) {
+                errMsg =  'Error! You have inserted a minimum value below the permitted threshold!';                      
+            }
         }
     }
 

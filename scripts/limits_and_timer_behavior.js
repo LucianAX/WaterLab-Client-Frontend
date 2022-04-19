@@ -170,7 +170,7 @@ const btnLimitAcceptListener = event => {
     let peerInputEl = document.getElementById(peerInputName);
 
     const validationResult = validateNewLimit(
-        nameArr[1],
+        nameArr,
         inputEl.value,
         peerInputEl.value,
         event.target.parentElement.children    
