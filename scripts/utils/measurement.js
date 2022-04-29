@@ -28,7 +28,7 @@ const getRandomRealNumber = (min, max, desiredDecimals) => {
     return Number(longDigitsVal.toFixed(desiredDecimals));
 }
 
-const prependIntoTable = measurement => {
+const prependMeasurementIntoTable = measurement => {
     let measurementsTable = document.getElementById('measurements-table-body');
     let newTableRow = document.createElement('tr');
 

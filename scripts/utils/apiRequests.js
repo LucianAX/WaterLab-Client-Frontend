@@ -1,3 +1,5 @@
+// *** STATIONARY UNIT AREA *** ??
+
 async function requestGetStationaryUnitData() {
     try {
         const url = 'http://localhost:4000/api/stationaryUnit/1';
@@ -35,7 +37,6 @@ async function requestUpdateStationaryUnitInterval(timeInterval) {
 
         if (response.ok) {
             const jsonResponse = await response.json();
-            // console.log(`Updated interval from DB: ${jsonResponse.updatedInterval}`);
             return jsonResponse.updatedStationaryUnit.interval_execute_measurement;
         }
         throw new Error('Request failed!');
@@ -95,6 +96,9 @@ async function requestUpdateStationaryUnitLimit(newLimitType, newLimitValue) {
     }
 }
 
+
+// *** MEASUREMENT AREA *** //
+
 async function requestPostMeasurement({
         timestamp, phValue,
         temperatureCelsius, electricConductivity
@@ -112,7 +116,7 @@ async function requestPostMeasurement({
                     phValue: phValue,
                     tempC: temperatureCelsius,
                     elecCond: electricConductivity,
-                    stationaryUnitID: 1 
+                    stationaryUnitID: 1,
                 }
             })
         });
@@ -126,5 +130,31 @@ async function requestPostMeasurement({
         }
     } catch (error) {
         console.log(error);
+    }
+}
+
+
+
+// *** WARNINGS AREA *** //
+
+async function requestGetWarnings() {
+    try {
+        //sends request
+        const response = await fetch('http://localhost:4000/api/warnings', {
+            method: 'GET',
+            headers: {
+                'Content_Type': 'application/json'
+            }
+        })
+
+        //handles response if successful
+        if (response.ok) {
+            const jsonResponse = await response.json();
+            return jsonResponse.warnings;
+        }
+    }
+    //handles response if unsuccessful
+    catch (error) {
+        console.log(error)
     }
 }

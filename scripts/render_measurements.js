@@ -4,7 +4,7 @@ let insertIntoTable = measurement => {
     
     // console.log(measurement.hasWarning);
 
-    if (measurement.has_warning === 'true') {
+    if (measurement.has_warning) {
         newTableRow.classList.add('has-warning');
     }
 
@@ -37,8 +37,7 @@ async function renderMeasurements() {
             const jsonResponse = await response.json();
             
             //Code to execute with jsonResponse
-            jsonResponse.measurements
-                .forEach(measurement => insertIntoTable(measurement) );
+            jsonResponse.measurements.forEach(measurement => insertIntoTable(measurement) );
         }
     } 
     //handles response if unsuccessful

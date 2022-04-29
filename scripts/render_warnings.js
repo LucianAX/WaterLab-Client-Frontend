@@ -16,29 +16,6 @@ let insertWarningIntoTable = warning => {
     measurementsTable.appendChild(newTableRow)
 }
 
-async function renderWarnings() {
-    
-    try {
-        //sends request
-        const response = await fetch('http://localhost:4000/api/warnings', {
-            method: 'GET',
-            headers: {
-                'Content_Type': 'application/json'
-            }
-        })
-
-        //handles response if successful
-        if (response.ok) {
-            const jsonResponse = await response.json()
-
-            //Code to execute with jsonResponse
-            jsonResponse.warnings.forEach(warning => insertWarningIntoTable(warning) )
-        }
-    }
-    //handles response if unsuccessful
-    catch (error) {
-        console.log(error)
-    }
-}
-
-renderWarnings()
+requestGetWarnings().then(warnings => {
+    warnings.forEach(warning => insertWarningIntoTable(warning));
+});
